@@ -25,5 +25,5 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-    private String status; // e.g., "PENDING", "COMPLETED", etc.
+    private String status;
 }

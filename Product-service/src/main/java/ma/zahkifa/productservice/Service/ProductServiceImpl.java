@@ -2,12 +2,13 @@ package ma.zahkifa.productservice.Service;
 
 import ma.zahkifa.productservice.Model.Product;
 import ma.zahkifa.productservice.Repo.ProductRepository;
-import ma.zahkifa.productservice.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -17,13 +18,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        // Convert Iterable<Object> to List<Product>
+        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
+                .map(obj -> (Product) obj) // Cast each object to Product
+                .collect(Collectors.toList());
     }
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+        return Optional.ofNullable(productRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Product not found with id " + id)))
+                .map(obj -> (Product) obj) // Cast the object to Product
+                .orElseThrow(() -> new RuntimeException("Product conversion failed"));
     }
 
     @Override

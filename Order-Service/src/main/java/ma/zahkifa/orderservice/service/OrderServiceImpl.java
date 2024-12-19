@@ -1,4 +1,4 @@
-package ma.zahkifa.orderservice.service.impl;
+package ma.zahkifa.orderservice.service;
 
 import ma.zahkifa.orderservice.model.Order;
 import ma.zahkifa.orderservice.repo.OrderRepository;
