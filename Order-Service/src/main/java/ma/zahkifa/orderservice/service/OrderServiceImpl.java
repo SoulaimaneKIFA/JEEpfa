@@ -1,5 +1,6 @@
 package ma.zahkifa.orderservice.service;
 
+import ma.zahkifa.orderservice.client.ProductServiceClient;
 import ma.zahkifa.orderservice.model.Order;
 import ma.zahkifa.orderservice.repo.OrderRepository;
 import ma.zahkifa.orderservice.service.OrderService;
@@ -14,7 +15,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
+    @Autowired
+    private ProductServiceClient productServiceClient;
+    @Override
+    public String getProductDetails(Long productId) {
+        return productServiceClient.getProductDetails(productId);
+    }
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
